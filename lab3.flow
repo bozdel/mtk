@@ -1,0 +1,51 @@
+import string;
+
+myfib(n : int) -> [int] {
+    if (n == 0) {
+        [0];
+    }
+    else if (n == 1) {
+        [0, 1];
+    }
+    else {
+        fibs : [int] = myfib(n - 1);
+        last : [int] = [fibs[n - 2] + fibs[n - 1]];
+        concat(fibs, last);
+    }
+}
+
+myfib2(n : int, fibs : [int]) -> [int] {
+    len : int = length(fibs);
+    if (len < n) {
+        if (len < 2) {
+            myfib2(n, concat(fibs, [1]));
+        }
+        else {
+            myfib2(n, concat(fibs, [ fibs[len - 1] + fibs[len - 2] ]))
+        }
+    }
+    else {
+        fibs;
+    }
+}
+
+myfib3(n : int, fibs : ref [int]) -> ref [int] {
+    len : int = length(^fibs);
+    if (len < n) {
+        if (len < 2) {
+            refArrayPush(fibs, 1);
+        }
+        else {
+            refArrayPush(fibs, (^fibs)[len - 1] + (^fibs)[len - 2]);
+        }
+        myfib3(n, fibs);
+    }
+    else {
+        fibs;
+    }
+}
+
+main() {
+    // refArrayPush()
+    println(^(myfib3(7, ref[0])));
+}

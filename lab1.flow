@@ -1,0 +1,10 @@
+import string;
+
+int_to_str(a : [int]) -> [string] {
+    map(a, i2s);
+}
+
+main() {
+    a : [int] = [1,2,3,4,5];
+    println(int_to_str(a));
+}

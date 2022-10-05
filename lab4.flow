@@ -1,0 +1,35 @@
+inds1(a : [int], m : int) -> [Pair<int, int>]{
+    foldi(a, [], \i, acc, x -> {
+        foldi(a, acc, \j, acc2, y ->{
+            if (x + y == m && i < j){
+                concat(acc2, [Pair(i, j)]);
+            }
+            else {
+                acc2;
+            }
+        })
+    });
+
+}
+
+// {
+// (1,[0])
+
+// (1, [0, 1])
+
+// (5, [2])
+
+// (1, [0, 1, 3])
+// }
+
+//a = [1, 1, 5, 1]
+inds(a : [int], m : int) -> [Pair<int, int>]{
+    tree : Tree = foldi(a, makeTree(),
+        \i, t, value -> setTree(t, value, arrayPush(getTreeArrayValue(t,value), i)));
+
+    foldi(a, [], \i, pairs, a_i ->
+        switch (lookupTree(tree, m - a_i)) {
+            Some(ind): concat(pairs, map(ind, \x -> Pair(x, i)));
+            None(): pairs;
+        });
+}

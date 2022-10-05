@@ -1,0 +1,10 @@
+import string;
+
+my_sum(a : [int]) -> int {
+    my_add = \x, y -> x + y;
+    fold(a, 0, my_add);
+}
+
+main() {
+    println(my_sum([1,2,3,4]));
+}
